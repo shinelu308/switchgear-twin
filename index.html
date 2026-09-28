@@ -6,7 +6,12 @@
 <title>开关柜三维参考模型 · SG-01 数字孪生资产</title>
 <meta name="description" content="开关柜中等精度三维参考模型在线展示：17 个语义部件、爆炸展开动画、glTF 数据绑定字段。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='8' y='4' width='16' height='24' rx='2' fill='%231f6fe5'/%3E%3Crect x='11' y='8' width='10' height='3' rx='1' fill='white'/%3E%3Ccircle cx='13' cy='16' r='1.6' fill='white'/%3E%3Ccircle cx='13' cy='20' r='1.6' fill='%23f5c542'/%3E%3Ccircle cx='18' cy='20' r='1.6' fill='%23e04b3a'/%3E%3C/svg%3E">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4/dist/model-viewer.min.js"></script>
+<script type="importmap">
+{ "imports": {
+  "three": "./assets/vendor/three.module.js",
+  "three/addons/": "./assets/vendor/addons/"
+}}
+</script>
 <style>
   :root{
     --bg:#eef1f5; --card:#ffffff; --ink:#1c2733; --sub:#5b6b7c;
@@ -40,14 +45,21 @@
   .hint{margin-left:auto;font-size:12.5px;color:#93a3b3}
   @media (max-width:720px){.hint{display:none}}
 
-  model-viewer{width:100%;height:600px;--progress-bar-color:var(--accent);
-    --progress-mask:#fff;--poster-color:#fff;background:#fbfcfe}
-  @media (max-width:720px){model-viewer{height:430px}}
+  .stage{position:relative;height:600px;background:#fbfcfe}
+  @media (max-width:720px){.stage{height:430px}}
+  #view{width:100%;height:100%;display:block}
+  #loading{position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:14px;background:#fbfcfe;color:var(--sub);font-size:14px}
+  #loadbar{width:220px;height:6px;border-radius:6px;background:#e6ebf1;overflow:hidden}
+  #loadbar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  #err{position:absolute;left:0;right:0;bottom:0;padding:10px 16px;background:#fdeceb;
+    color:#c5372c;font-size:13px;display:none}
+  .badge3d{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.82);
+    border:1px solid var(--border);border-radius:8px;padding:5px 11px;font-size:12px;color:var(--sub)}
 
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
   @media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
-  .stat{background:var(--card);border:1px solid var(--border);border-radius:14px;
-    padding:16px 18px}
+  .stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
   .stat b{display:block;font-size:24px;font-family:var(--mono);font-weight:700;color:var(--ink)}
   .stat span{font-size:12.5px;color:var(--sub)}
 
@@ -58,25 +70,21 @@
 
   .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   @media (max-width:720px){.rgrid{grid-template-columns:1fr}}
-  figure{background:var(--card);border:1px solid var(--border);border-radius:14px;
-    overflow:hidden}
+  figure{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
   figure img{width:100%;display:block}
   figcaption{padding:11px 16px;font-size:13px;color:var(--sub);border-top:1px solid var(--border)}
 
-  .tbl-card{background:var(--card);border:1px solid var(--border);border-radius:14px;
-    overflow:auto}
+  .tbl-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:auto}
   table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
   thead th{text-align:left;padding:12px 16px;background:#f7f9fc;color:var(--sub);
-    font-weight:600;font-size:12px;letter-spacing:.05em;white-space:nowrap;
-    border-bottom:1px solid var(--border)}
+    font-weight:600;font-size:12px;letter-spacing:.05em;white-space:nowrap;border-bottom:1px solid var(--border)}
   tbody td{padding:10px 16px;border-bottom:1px solid #eef2f7;vertical-align:middle}
   tbody tr:last-child td{border-bottom:none}
   tbody tr:hover{background:#f8fbff}
   .pid{font-family:var(--mono);font-size:12.5px;color:var(--accent);font-weight:600;white-space:nowrap}
   .pname b{font-weight:600}
   .pname i{display:block;font-style:normal;font-size:11.5px;color:#93a3b3}
-  .badge{display:inline-block;font-size:11.5px;padding:2px 10px;border-radius:20px;
-    white-space:nowrap;font-weight:500}
+  .badge{display:inline-block;font-size:11.5px;padding:2px 10px;border-radius:20px;white-space:nowrap;font-weight:500}
   .off{font-family:var(--mono);font-size:12px;color:var(--sub);white-space:nowrap}
   .b-structure{background:#eef2f7;color:#4a5a6a}
   .b-enclosure{background:#f1f3f6;color:#697a8c}
@@ -93,8 +101,7 @@
   @media (max-width:720px){.bind-card{grid-template-columns:1fr}}
   .bind-item{padding:9px 0;font-size:14px}
   .bind-item b{color:var(--ink)}
-  .bind-item code{font-family:var(--mono);font-size:12.5px;background:#f2f5f9;
-    padding:2px 7px;border-radius:6px;color:#33507a}
+  .bind-item code{font-family:var(--mono);font-size:12.5px;background:#f2f5f9;padding:2px 7px;border-radius:6px;color:#33507a}
   .bind-item p{color:var(--sub);font-size:13px;margin-top:3px}
 
   .note{background:#fffbea;border:1px solid #f3e5b8;border-radius:14px;
@@ -102,8 +109,7 @@
   .note b{color:#5f4d0e}
 
   footer{margin-top:56px;padding:26px 0 40px;border-top:1px solid var(--border);
-    color:#93a3b3;font-size:12.5px;display:flex;justify-content:space-between;
-    flex-wrap:wrap;gap:8px}
+    color:#93a3b3;font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
   footer .mono{font-family:var(--mono)}
 </style>
 </head>
@@ -127,21 +133,12 @@
       <label class="rot"><input type="checkbox" id="chkRot" checked> 自动旋转</label>
       <span class="hint">拖拽旋转 · 滚轮缩放 · 右键平移</span>
     </div>
-    <model-viewer id="mv"
-      src="assets/switchgear_digital_twin.glb"
-      alt="开关柜三维模型"
-      camera-controls
-      touch-action="pan-y"
-      auto-rotate
-      auto-rotate-delay="2500"
-      rotation-per-second="16deg"
-      shadow-intensity="1.1"
-      shadow-softness="0.8"
-      exposure="1.0"
-      environment-image="neutral"
-      interaction-prompt="none"
-      camera-orbit="32deg 74deg auto">
-    </model-viewer>
+    <div class="stage">
+      <canvas id="view"></canvas>
+      <div class="badge3d">实时 3D · 拖拽查看</div>
+      <div id="loading"><div>正在加载三维模型…</div><div id="loadbar"><i></i></div></div>
+      <div id="err"></div>
+    </div>
   </section>
 
   <section class="stats">
@@ -200,7 +197,7 @@
     <div class="bind-card">
       <div class="bind-item">
         <b>稳定部件 ID</b>
-        <p>每个部件父节点携带 <code>component_id</code> / <code>label</code> / <code>category</code> / <code>geometry_status</code> / <code>sensor_binding</code>（glTF extras）。</p>
+        <p>每个部件父节点携带 <code>component_id</code> / <label> / <code>category</code> / <code>geometry_status</code> / <code>sensor_binding</code>（glTF extras）。</p>
       </div>
       <div class="bind-item">
         <b>业务映射键</b>
@@ -215,8 +212,8 @@
         <p><code>sensor_binding</code> 当前为空，待根据实际设备点表接入；展开动画仅用于结构展示。</p>
       </div>
       <div class="bind-item">
-        <b>动画</b>
-        <p>GLB 内置 1 条展开动画：第 1 帧装配状态 → 第 90 帧爆炸状态，可通过播放控制切换。</p>
+        <b>展示页动画</b>
+        <p>页面使用 Three.js 按部件 <code>exploded_offset_m</code> 实时驱动爆炸位移，不依赖 GLB 内置动画。</p>
       </div>
       <div class="bind-item">
         <b>运行时提示</b>
@@ -238,31 +235,162 @@
 
 </main>
 
-<script>
-  const mv = document.getElementById('mv');
-  const btnAsm = document.getElementById('btnAsm');
-  const btnExp = document.getElementById('btnExp');
-  const chkRot = document.getElementById('chkRot');
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-  function setMode(m){
-    btnAsm.classList.toggle('active', m === 'asm');
-    btnExp.classList.toggle('active', m === 'exp');
+const canvas = document.getElementById('view');
+const loading = document.getElementById('loading');
+const loadbar = loading.querySelector('i');
+const errBox = document.getElementById('err');
+const btnAsm = document.getElementById('btnAsm');
+const btnExp = document.getElementById('btnExp');
+const chkRot = document.getElementById('chkRot');
+
+let renderer, scene, camera, controls, root = null;
+let parts = [];
+let explodeU = 0, targetU = 0;
+
+function init() {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xfbfcfe);
+
+  camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+  camera.position.set(2.4, 1.95, 3.3);
+
+  controls = new OrbitControls(camera, canvas);
+  controls.target.set(0, 1.1, 0);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 1.1;
+  controls.minDistance = 1.4;
+  controls.maxDistance = 12;
+
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8b95a3, 0.55));
+  const dir = new THREE.DirectionalLight(0xffffff, 2.1);
+  dir.position.set(4, 7, 5);
+  dir.castShadow = true;
+  dir.shadow.mapSize.set(2048, 2048);
+  dir.shadow.camera.near = 0.5; dir.shadow.camera.far = 25;
+  dir.shadow.camera.left = -4; dir.shadow.camera.right = 4;
+  dir.shadow.camera.top = 5; dir.shadow.camera.bottom = -1;
+  dir.shadow.bias = -0.0004;
+  scene.add(dir);
+
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(40, 40),
+    new THREE.ShadowMaterial({ opacity: 0.16 })
+  );
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  resize();
+  window.addEventListener('resize', resize);
+  animate();
+}
+
+function resize() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (!w || !h) return;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+
+function applyExplode(u) {
+  for (const p of parts) {
+    for (let i = 0; i < p.meshes.length; i++) {
+      p.meshes[i].position.set(
+        p.base[i].x + p.off.x * u,
+        p.base[i].y + p.off.y * u,
+        p.base[i].z + p.off.z * u
+      );
+    }
   }
+}
 
-  btnAsm.addEventListener('click', () => {
-    mv.autoplay = false;
-    mv.pause();
-    mv.currentTime = 0;
-    setMode('asm');
-  });
+function animate() {
+  requestAnimationFrame(animate);
+  if (Math.abs(targetU - explodeU) > 0.0005) {
+    explodeU += (targetU - explodeU) * 0.07;
+    if (Math.abs(targetU - explodeU) <= 0.0005) explodeU = targetU;
+    applyExplode(explodeU);
+  }
+  controls.update();
+  renderer.render(scene, camera);
+}
 
-  btnExp.addEventListener('click', () => {
-    mv.autoplay = true;
-    mv.play();
-    setMode('exp');
-  });
+const loader = new GLTFLoader();
+loader.load(
+  'assets/switchgear_digital_twin.glb',
+  async (gltf) => {
+    root = gltf.scene;
+    root.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+    scene.add(root);
 
-  chkRot.addEventListener('change', e => { mv.autoRotate = e.target.checked; });
+    let comps = [];
+    try { comps = (await fetch('assets/component_manifest.json').then(r => r.json())).components; }
+    catch (e) { console.warn('manifest load failed', e); }
+
+    parts = [];
+    for (const c of comps) {
+      const meshes = [];
+      root.traverse(o => { if (o.isMesh && o.name.toUpperCase().startsWith(c.id)) meshes.push(o); });
+      if (meshes.length) parts.push({ meshes, base: meshes.map(m => m.position.clone()), off: new THREE.Vector3(...c.exploded_offset_m) });
+    }
+    applyExplode(0);
+
+    window.__viewer = {
+      ready: true,
+      setExplode: (u) => { targetU = u; },
+      setExplodeImmediate: (u) => { targetU = u; explodeU = u; applyExplode(u); },
+      explodeU: () => explodeU,
+      getBBox: () => {
+        root.updateMatrixWorld(true);
+        const box = new THREE.Box3();
+        root.traverse(o => { if (o.isMesh && o.geometry) { o.geometry.computeBoundingBox(); box.expandByObject(o); } });
+        const s = new THREE.Vector3(); box.getSize(s);
+        return { x: +s.x.toFixed(3), y: +s.y.toFixed(3), z: +s.z.toFixed(3) };
+      }
+    };
+
+    loading.style.display = 'none';
+  },
+  (xhr) => {
+    if (xhr.total) loadbar.style.width = Math.min(100, (xhr.loaded / xhr.total) * 100) + '%';
+  },
+  (err) => {
+    console.error(err);
+    errBox.style.display = 'block';
+    errBox.textContent = '模型加载失败：' + (err && err.message ? err.message : err);
+    loading.style.display = 'none';
+  }
+);
+
+function setMode(m) {
+  btnAsm.classList.toggle('active', m === 'asm');
+  btnExp.classList.toggle('active', m === 'exp');
+}
+btnAsm.addEventListener('click', () => { targetU = 0; setMode('asm'); });
+btnExp.addEventListener('click', () => { targetU = 1; setMode('exp'); });
+chkRot.addEventListener('change', e => { controls.autoRotate = e.target.checked; });
+
+init();
 </script>
 </body>
 </html>
