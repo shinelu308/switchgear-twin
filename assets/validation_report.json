@@ -1,0 +1,33 @@
+{
+  "components": 17,
+  "blender_mesh_objects": 1149,
+  "assembled_bounds_m": {
+    "min": [
+      -0.4114999771118164,
+      -0.578000009059906,
+      0.008000001311302185
+    ],
+    "max": [
+      0.4114999771118164,
+      0.5130000114440918,
+      2.2054998874664307
+    ]
+  },
+  "glb_nodes": 34,
+  "glb_meshes": 17,
+  "glb_triangles_instances_not_expanded": 135814,
+  "glb_animations": 1,
+  "glb_bytes": 7215320,
+  "checks": [
+    "unique stable component IDs",
+    "assembled root transforms",
+    "exploded root transforms",
+    "GLB header and metadata",
+    "GLB animation exists"
+  ],
+  "limitations": [
+    "No electrical/engineering validation",
+    "No target runtime performance test",
+    "No collision-free assembly validation"
+  ]
+}

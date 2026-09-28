@@ -1,0 +1,203 @@
+{
+  "asset_id": "SG-01",
+  "units": "meters",
+  "assumed_envelope_m": [
+    0.8,
+    1,
+    2.2
+  ],
+  "engineering_verified": false,
+  "states": {
+    "assembled_frame": 1,
+    "exploded_frame": 90
+  },
+  "components": [
+    {
+      "id": "SG-FRAME",
+      "label": "Cabinet structural skeleton",
+      "category": "structure",
+      "exploded_offset_m": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-BASE",
+      "label": "Bottom tray",
+      "category": "enclosure",
+      "exploded_offset_m": [
+        -1.0,
+        0.0,
+        -0.28
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-TOP",
+      "label": "Top cover",
+      "category": "enclosure",
+      "exploded_offset_m": [
+        -1.0,
+        0.0,
+        0.6
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-DOOR-F",
+      "label": "Front instrument door",
+      "category": "door",
+      "exploded_offset_m": [
+        -1.95,
+        -0.45,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-SIDE-L",
+      "label": "Left side panel",
+      "category": "enclosure",
+      "exploded_offset_m": [
+        -1.6,
+        0.7,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-SIDE-R",
+      "label": "Right side panel",
+      "category": "enclosure",
+      "exploded_offset_m": [
+        1.65,
+        0.3,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-REAR",
+      "label": "Rear service panel",
+      "category": "enclosure",
+      "exploded_offset_m": [
+        2.35,
+        0.65,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-MOUNT",
+      "label": "Equipment mounting backplate",
+      "category": "structure",
+      "exploded_offset_m": [
+        0.65,
+        0.55,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-BUS",
+      "label": "Main busbars and risers",
+      "category": "busbar",
+      "exploded_offset_m": [
+        0.52,
+        0.0,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-BREAKER",
+      "label": "Main air circuit breaker",
+      "category": "breaker",
+      "exploded_offset_m": [
+        0.18,
+        -0.92,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-SUPPORT",
+      "label": "Breaker support and crossmembers",
+      "category": "structure",
+      "exploded_offset_m": [
+        0.33,
+        -0.22,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-CABLE",
+      "label": "Outgoing cable harness",
+      "category": "cable",
+      "exploded_offset_m": [
+        1.02,
+        -0.3,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-TERM-01",
+      "label": "Terminal bank 1",
+      "category": "terminal_bank",
+      "exploded_offset_m": [
+        0.64,
+        -0.62,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-TERM-02",
+      "label": "Terminal bank 2",
+      "category": "terminal_bank",
+      "exploded_offset_m": [
+        0.64,
+        -0.69,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-TERM-03",
+      "label": "Terminal bank 3",
+      "category": "terminal_bank",
+      "exploded_offset_m": [
+        0.64,
+        -0.76,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-AUX",
+      "label": "Auxiliary switching modules",
+      "category": "control",
+      "exploded_offset_m": [
+        1.04,
+        -0.1,
+        0.0
+      ],
+      "sensor_binding": null
+    },
+    {
+      "id": "SG-PE",
+      "label": "Protective earth rail",
+      "category": "earth",
+      "exploded_offset_m": [
+        0.72,
+        -0.15,
+        0.0
+      ],
+      "sensor_binding": null
+    }
+  ]
+}
