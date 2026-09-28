@@ -6,21 +6,22 @@
 
 ## 页面能力
 
-- `<model-viewer>` 单文件零构建：拖拽旋转 / 滚轮缩放 / 右键平移 / 自动旋转
-- 装配 ⇄ 爆炸切换（播放 GLB 内置展开动画，第 1 帧 → 第 90 帧）
+- Three.js（r160）本地化加载：拖拽旋转 / 滚轮缩放 / 右键平移 / 自动旋转
+- 装配 ⇄ 爆炸切换：页面按 `component_manifest.json` 的 `exploded_offset_m` 实时驱动各部件 mesh 位移（不依赖 GLB 内置动画）
 - 17 个语义部件清单（稳定 ID / 类别 / 爆炸位移）
 - 数字孪生接入说明（glTF extras 数据绑定字段）
 
 ## 目录结构
 
 ```
-index.html                        展示页（model-viewer + 部件清单）
-assets/switchgear_digital_twin.glb  实时展示资产（7.2MB，17 网格 / 34 节点 / 1 动画）
-assets/component_manifest.json      部件清单（component_id / 类别 / 爆炸位移 / sensor_binding）
-assets/validation_report.json       资产校验报告
-img/assembled_cutaway.png           装配剖视渲染
-img/exploded.png                    爆炸状态渲染
-docs/USAGE.md                       模型使用与再生成说明
+index.html                           展示页（Three.js 加载 + 部件清单）
+assets/vendor/                       本地化 Three.js 核心与 addons（去 CDN，国内访问稳定）
+assets/switchgear_digital_twin.glb   展示资产（7.2MB，17 网格 / 34 节点）
+assets/component_manifest.json       部件清单（component_id / 类别 / 爆炸位移 / sensor_binding）
+assets/validation_report.json        资产校验报告
+img/assembled_cutaway.png            装配剖视渲染
+img/exploded.png                     爆炸状态渲染
+docs/USAGE.md                        模型使用与再生成说明
 ```
 
 ## 数字孪生接入要点
